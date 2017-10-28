@@ -15,40 +15,66 @@ import java.awt.event.*;
 public class MainPanel extends JPanel implements ActionListener
 {
     
-    JButton optionB, startB;
-    JPanel ops,start;
+    JPanel start;
+    OptionsPanel ops;
+    MenuBar mb;
+    NavigationPanel np;
+    OptionsPanel op;
+    InstructionsPanel ip;
+    BorderLayout layout;
             
             
-    MainPanel(JPanel options) {
-        ops = options;
-        
+    MainPanel(OptionsPanel op) 
+    {
+        this.op = op;
         setBackground(Color.blue);
         setVisible(true);
+        layout = new BorderLayout();
+        setLayout(layout);        
         
-        optionB = new JButton("Options");
-        add(optionB);
-        optionB.addActionListener((this));
-        
-        startB = new JButton("Start");
-        add(startB);
-        startB.addActionListener((this));
-    
+        mb = new MenuBar();
+        np = new NavigationPanel();
+        ip = new InstructionsPanel();
+        add(mb, "North");  
+        add(np, "Center");
+        mb.btnOptions.addActionListener((this));
+        mb.btnBack.addActionListener((this));
+        mb.btnInstructions.addActionListener((this));
+        mb.lblPlayer.setText("Hello there!");
     }
     
     public void actionPerformed(ActionEvent event){
         Object obj = event.getSource();
         
         
-        if (obj == optionB){
-            setVisible(false);
-            ops.setVisible(true);
+        if (obj == mb.btnOptions){
+            op = new OptionsPanel();
+            remove(layout.getLayoutComponent(BorderLayout.CENTER));
+            add(op, "Center");
             repaint();
+            revalidate();
         }
         
-        if(obj == startB){
+        if(obj == mb.btnStart){
             setVisible(false);
             start.setVisible(true);
+        }
+        
+        if (obj == mb.btnBack)
+        {
+            mb.lblPlayer.setText("Hello " + op.nameEntry.getText());
+            remove(layout.getLayoutComponent(BorderLayout.CENTER));
+            add(np, "Center");
             repaint();
+            revalidate();
+        }
+        
+        if (obj == mb.btnInstructions)
+        {
+            remove(layout.getLayoutComponent(BorderLayout.CENTER));
+            add(ip, "Center");
+            repaint();
+            revalidate();
         }
     }
     

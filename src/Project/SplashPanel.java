@@ -14,14 +14,31 @@ import javax.swing.*;
  */
 public class SplashPanel extends JPanel 
 {
-    SplashPanel()
-    {
+  
+    JLabel lblCount;
+    int counter = 5;
+    JLabel lblProgrammers = new JLabel("Those responsible:");
+    JLabel programmer1 = new JLabel("Greg Luckenbach"); 
+    JLabel programmer2 = new JLabel("Kelvin Sanchez");
+    
+    public SplashPanel()
+    {        
         setVisible(true);
         setBackground(Color.red);
+        setLayout(null);
         JLabel title = new JLabel("Gamey Game");
+        lblCount = new JLabel("Screen dismisses in " + counter + "...");        
         title.setFont(new Font("SansSerif", Font.BOLD, 50));
-        title.setBounds(400, 300, WIDTH, HEIGHT);
+        title.setBounds(20, 20, 500, 100);
+        lblCount.setBounds(20, 500, 150, 20);
+        lblProgrammers.setBounds(600, 300, 200, 20);
+        programmer1.setBounds(600, 330, 200, 20);
+        programmer2.setBounds(600, 360, 200, 20);
         title.setForeground(Color.white);
         add(title);
+        add(lblProgrammers);
+        add(programmer1);
+        add(programmer2);
+        add(lblCount);        
     }
 }

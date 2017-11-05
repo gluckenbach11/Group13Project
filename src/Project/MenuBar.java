@@ -27,13 +27,13 @@ public class MenuBar extends JPanel
     MenuBar()
     {
         setVisible(true);
-        setBackground(Color.magenta);
+        setBackground(new Color(75, 200, 160));
         btnBack = new JButton("Back");
         btnStart = new JButton("Start");
         btnOptions = new JButton("Options");
         btnInstructions = new JButton("Instructions");
         lblPlayer = new JLabel();
-        timer = new JLabel("Time: Click Start to Begin >>>");
+        timer = new JLabel("Click Start to Begin >>>");
         
         Timer count = new Timer(1000, new ActionListener()
         {
@@ -52,9 +52,9 @@ public class MenuBar extends JPanel
             {
                 count.start();
             }        
-        });
+        });       
         
-        
+        //add components
         add(timer);        
         add(btnStart);        
         add(btnInstructions);

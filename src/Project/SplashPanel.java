@@ -30,10 +30,10 @@ public class SplashPanel extends JPanel
         lblCount = new JLabel("Screen dismisses in " + counter + "...");        
         title.setFont(new Font("SansSerif", Font.BOLD, 50));
         title.setBounds(20, 20, 500, 100);
-        lblCount.setBounds(20, 500, 150, 20);
-        lblProgrammers.setBounds(600, 300, 200, 20);
-        programmer1.setBounds(600, 330, 200, 20);
-        programmer2.setBounds(600, 360, 200, 20);
+        lblCount.setBounds(20, 700, 150, 20);
+        lblProgrammers.setBounds(900, 600, 200, 20);
+        programmer1.setBounds(900, 630, 200, 20);
+        programmer2.setBounds(900, 660, 200, 20);
         title.setForeground(Color.white);
         add(title);
         add(lblProgrammers);

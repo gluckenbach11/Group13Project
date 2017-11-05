@@ -5,22 +5,18 @@
  */
 package Project;
 
-import java.awt.*;
+import java.awt.Color;
 import javax.swing.*;
 
 /**
  *
  * @author gluck
  */
-public class InstructionsPanel extends JPanel
+public class GamePanel4 extends JPanel
 {
-    InstructionsPanel()
+    GamePanel4()
     {
-        JLabel title = new JLabel("Instructions");
-        title.setFont(new Font("SansSerif", Font.BOLD, 50));
-        title.setForeground(Color.white);
-        setBackground(Color.CYAN);
+        setBackground(Color.GREEN);
         setVisible(true);
-        add(title);
     }
 }

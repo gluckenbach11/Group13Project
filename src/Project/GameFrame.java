@@ -5,7 +5,6 @@
  */
 package Project;
 
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -28,7 +27,7 @@ public class GameFrame extends JFrame implements ActionListener
     {
         super("Group 13");
         setVisible(true);
-        setSize(800, 600);
+        setSize(1200, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         sp = new SplashPanel();
         add(sp);

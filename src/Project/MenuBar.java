@@ -22,10 +22,14 @@ public class MenuBar extends JPanel
     JButton btnInstructions;
     JLabel lblPlayer;
     JLabel timer;
+    Timer count;
     int time = 0;
+    double timerMultiplier;
+    int timerTick = 1000;
     
     MenuBar()
     {
+        super();
         setVisible(true);
         setBackground(new Color(75, 200, 160));
         btnBack = new JButton("Back");
@@ -34,8 +38,10 @@ public class MenuBar extends JPanel
         btnInstructions = new JButton("Instructions");
         lblPlayer = new JLabel();
         timer = new JLabel("Click Start to Begin >>>");
+        timerMultiplier = 1.0;
+        timerTick = 1000;
         
-        Timer count = new Timer(1000, new ActionListener()
+        count = new Timer((int)(timerTick), new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e) 
@@ -50,6 +56,7 @@ public class MenuBar extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) 
             {
+                count.setDelay(timerTick);
                 count.start();
             }        
         });       

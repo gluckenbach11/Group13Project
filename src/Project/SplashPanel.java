@@ -16,7 +16,7 @@ public class SplashPanel extends JPanel
 {
   
     JLabel lblCount;
-    int counter = 5;
+    int counter = 1;
     JLabel lblProgrammers = new JLabel("Those responsible:");
     JLabel programmer1 = new JLabel("Greg Luckenbach"); 
     JLabel programmer2 = new JLabel("Kelvin Sanchez");

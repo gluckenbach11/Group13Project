@@ -15,7 +15,7 @@ import javax.swing.*;
 public class GameFrame extends JFrame implements ActionListener
 {
     
-    Timer timer = new Timer(5000, this);
+    Timer timer = new Timer(100, this);
     Timer count = new Timer(1000, this);
     Timer gameTimer = new Timer(1000, this);
     int counter = 5;

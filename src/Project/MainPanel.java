@@ -23,6 +23,7 @@ public class MainPanel extends JPanel implements ActionListener
     InstructionsPanel ip;
     BorderLayout layout;
     Rectangle playerRectangle;
+    int timerTick;
     GamePanel1 gp1;
     GamePanel2 gp2;
     GamePanel3 gp3;
@@ -30,6 +31,8 @@ public class MainPanel extends JPanel implements ActionListener
     GamePanel5 gp5;
     int xx = 300;
     int yy = 300;
+    int game1Score;
+    String difficulty;
             
             
     MainPanel(OptionsPanel op) 
@@ -43,13 +46,16 @@ public class MainPanel extends JPanel implements ActionListener
         mb = new MenuBar();
         np = new NavigationPanel();
         ip = new InstructionsPanel();
+        gp1 = new GamePanel1();
         gp2 = new GamePanel2();
+        gp3 = new GamePanel3();
         add(mb, "North");  
         add(np, "Center");
         mb.btnOptions.addActionListener((this));
         mb.btnBack.addActionListener((this));
         mb.btnInstructions.addActionListener((this));
         op.save.addActionListener((this));
+        gp1.cb.addActionListener((this));
         mb.lblPlayer.setText("Hello there!");
         
           
@@ -71,7 +77,6 @@ public class MainPanel extends JPanel implements ActionListener
                 if (playerRectangle.intersects(np.campus1.getCampusRectangle()))
                 {
                     np.campus1.setIcon(new ImageIcon("images/complete.png"));
-                    gp1 = new GamePanel1();
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(gp1, "Center");
                     repaint();
@@ -80,7 +85,6 @@ public class MainPanel extends JPanel implements ActionListener
                 else if (playerRectangle.intersects(np.campus2.getCampusRectangle()))
                 {
                     np.campus2.setIcon(new ImageIcon("images/complete.png"));
-                    gp2 = new GamePanel2();
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(gp2, "Center");
                     repaint();
@@ -89,7 +93,6 @@ public class MainPanel extends JPanel implements ActionListener
                 else if (playerRectangle.intersects(np.campus3.getCampusRectangle()))
                 {
                     np.campus3.setIcon(new ImageIcon("images/complete.png"));
-                    gp3 = new GamePanel3();
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(gp3, "Center");
                     repaint();
@@ -114,7 +117,23 @@ public class MainPanel extends JPanel implements ActionListener
                     revalidate();
                 }
             } 
-            
+        });
+        
+        gp1.cb.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                game1Score++;
+                if (game1Score >=5)
+                {
+                    remove(layout.getLayoutComponent(BorderLayout.CENTER));
+                    add(np, "Center");
+                    xx = 300;
+                    yy = 300;
+                    np.player.setBounds(new Rectangle(xx, yy, 100, 100));
+                    repaint();
+                    revalidate();
+                }
+            }
             
         });
         
@@ -166,12 +185,7 @@ public class MainPanel extends JPanel implements ActionListener
                 }
             }            
         }); 
-        
-        
-        
-        
-    }
-    
+    }    
     
     public void actionPerformed(ActionEvent event)
     {
@@ -229,8 +243,37 @@ public class MainPanel extends JPanel implements ActionListener
                 op.playerSelection = 3;
             }
             
+            if (op.speed1.isSelected())
+            {
+                difficulty = "slow";
+            }
+            else if (op.speed2.isSelected())
+            {
+                difficulty = "normal";
+            }
+            else if (op.speed3.isSelected())
+            {
+                difficulty = "fast";
+            }
+            
+            if (op.timer1.isSelected())
+            {
+                timerTick = 2000;
+            }
+            else if (op.timer2.isSelected())
+            {
+                timerTick = 1000;
+            }
+            else if (op.timer3.isSelected())
+            {
+                timerTick = 100;
+            }
+            
             mb.lblPlayer.setText("Hello, " + op.playerName);
-            np.player.setPlayerIcon(op.playerSelection);            
+            np.player.setPlayerIcon(op.playerSelection); 
+            gp1.setGameSpeed(difficulty);
+            gp3.setGameSpeed(difficulty);
+            mb.count.setDelay(timerTick);
             remove(layout.getLayoutComponent(BorderLayout.CENTER));
             add(np, "Center");
             repaint();

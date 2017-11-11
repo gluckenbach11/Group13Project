@@ -1,22 +1,63 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Project;
 
+import java.awt.event.*;
 import java.awt.Color;
 import javax.swing.*;
+import java.awt.*;
 
 /**
  *
  * @author gluck
  */
-public class GamePanel4 extends JPanel
-{
-    GamePanel4()
-    {
+public class GamePanel4 extends JPanel implements ActionListener{
+    Timer tim;
+
+    
+    int xx = 300;
+    int yy = 300;
+    
+    darkStar dS = new darkStar(130, 100);
+    starz s1    = new starz(230  , 120);
+    starz s2    = new starz(330  ,  80);
+    starz s3    = new starz(130  ,  140);
+    
+    GamePanel4(){
         setBackground(Color.GREEN);
         setVisible(true);
+        setLayout(null);
+        add(dS);
+        add(s1);
+        add(s2);
+        add(s3);
+        
+        tim = new Timer(1000,this);
+        tim.start();
+        
+    }
+     @Override
+    public void paintComponent(Graphics g) {
+        
+        super.paintComponent(g);
+        Image myImage = Toolkit.getDefaultToolkit().getImage("images/deathStar.png");
+        g.drawImage(myImage, 0, 0, this);
+        requestFocusInWindow();
+    }
+    
+      public void actionPerformed(ActionEvent event){
+        Object obj = event.getSource();
+        
+        if(obj == tim){
+            int x = (int) (Math.random()*20);
+            int y = (int) (Math.random()*20);
+            int X = (int) (Math.random()*20);
+            int Y = (int) (Math.random()*20);
+            int j = (int) (Math.random()*20);
+            int k = (int) (Math.random()*20);
+            
+            s1.setBounds(new Rectangle(60*x,30*y,32,32));
+            s2.setBounds(new Rectangle(60*X,30*Y,32,32));
+            s3.setBounds(new Rectangle(60*x,30*Y,32,32));
+            dS.setBounds(new Rectangle(60*j,30*k,128,128));
+        }
     }
 }

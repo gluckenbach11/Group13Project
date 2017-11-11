@@ -43,6 +43,7 @@ public class MainPanel extends JPanel implements ActionListener
         mb = new MenuBar();
         np = new NavigationPanel();
         ip = new InstructionsPanel();
+        gp2 = new GamePanel2();
         add(mb, "North");  
         add(np, "Center");
         mb.btnOptions.addActionListener((this));
@@ -51,6 +52,7 @@ public class MainPanel extends JPanel implements ActionListener
         op.save.addActionListener((this));
         mb.lblPlayer.setText("Hello there!");
         
+          
         np.addKeyListener(new KeyAdapter()
         {            
             @Override
@@ -111,9 +113,65 @@ public class MainPanel extends JPanel implements ActionListener
                     repaint();
                     revalidate();
                 }
+            } 
+            
+            
+        });
+        
+        gp2.addKeyListener(new KeyAdapter()
+        {            
+            @Override
+            public void keyPressed(KeyEvent e) 
+            {        
+                int kk = e.getKeyCode();
+                if(kk == KeyEvent.VK_SPACE) {}
+                if(kk == KeyEvent.VK_LEFT) {xx -= 25;}
+                if(kk == KeyEvent.VK_RIGHT) {xx += 25;}
+                if(kk == KeyEvent.VK_UP) {yy -= 25;}    
+                if(kk == KeyEvent.VK_DOWN) {yy += 25;}
+                playerRectangle = gp2.player.getBounds();
+                gp2.player.setBounds(new Rectangle(xx, yy, 100, 100));
+                repaint();
+                
+                //check for intersection between player piece and campuses
+                if (playerRectangle.intersects(gp2.s1.getstarzRectangle()))
+                {
+                    gp2.s1.setIcon(new ImageIcon(""));
+                    repaint();
+                    revalidate();
+                }
+                else if (playerRectangle.intersects(gp2.s2.getstarzRectangle()))
+                {
+                    gp2.s2.setIcon(new ImageIcon(""));
+                    repaint();
+                    revalidate();
+                }
+                else if (playerRectangle.intersects(gp2.s3.getstarzRectangle()))
+                {
+                    gp2.s3.setIcon(new ImageIcon(""));
+                    repaint();
+                    revalidate();
+                }
+                else if (playerRectangle.intersects(gp2.s4.getstarzRectangle()))
+                {
+                    gp2.s4.setIcon(new ImageIcon(""));
+                    repaint();
+                    revalidate();
+                }
+                else if (playerRectangle.intersects(gp2.s5.getstarzRectangle()))
+                {
+                    gp2.s5.setIcon(new ImageIcon(""));
+                    repaint();
+                    revalidate();
+                }
             }            
-        });        
+        }); 
+        
+        
+        
+        
     }
+    
     
     public void actionPerformed(ActionEvent event)
     {

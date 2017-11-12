@@ -21,14 +21,23 @@ public class GamePanel4 extends JPanel implements ActionListener{
     starz s2    = new starz(330  ,  80);
     starz s3    = new starz(130  ,  140);
     
+    Player player;
+    
     GamePanel4(){
+        
+        player = new Player();
         setBackground(Color.GREEN);
         setVisible(true);
         setLayout(null);
+        player.setBounds(xx, yy, 100, 100);
+        add(player); 
+        
         add(dS);
         add(s1);
         add(s2);
         add(s3);
+        
+        
         
         tim = new Timer(1000,this);
         tim.start();

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Project;
 
 import java.awt.*;
@@ -49,6 +44,7 @@ public class MainPanel extends JPanel implements ActionListener
         gp1 = new GamePanel1();
         gp2 = new GamePanel2();
         gp3 = new GamePanel3();
+        gp4 = new GamePanel4();
         add(mb, "North");  
         add(np, "Center");
         mb.btnOptions.addActionListener((this));
@@ -101,7 +97,6 @@ public class MainPanel extends JPanel implements ActionListener
                 else if (playerRectangle.intersects(np.campus4.getCampusRectangle()))
                 {
                     np.campus4.setIcon(new ImageIcon("images/complete.png"));
-                    gp4 = new GamePanel4();
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(gp4, "Center");
                     repaint();
@@ -183,8 +178,81 @@ public class MainPanel extends JPanel implements ActionListener
                     repaint();
                     revalidate();
                 }
+                else if (playerRectangle.intersects(gp2.s6.getstarzRectangle()))
+                {
+                    gp2.s6.setIcon(new ImageIcon(""));
+                    repaint();
+                    revalidate();
+                }
+                else if (playerRectangle.intersects(gp2.s7.getstarzRectangle()))
+                {
+                    gp2.s7.setIcon(new ImageIcon(""));
+                    repaint();
+                    revalidate();
+                }
+                else if (playerRectangle.intersects(gp2.s8.getstarzRectangle()))
+                {
+                    gp2.s8.setIcon(new ImageIcon(""));
+                    repaint();
+                    revalidate();
+                }
+                else if (playerRectangle.intersects(gp2.s9.getstarzRectangle()))
+                {
+                    gp2.s9.setIcon(new ImageIcon(""));
+                    repaint();
+                    revalidate();
+                }
+                else if (playerRectangle.intersects(gp2.s10.getstarzRectangle()))
+                {
+                    gp2.s10.setIcon(new ImageIcon(""));
+                    repaint();
+                    revalidate();
+                }
             }            
-        }); 
+        });
+        gp4.addKeyListener(new KeyAdapter()
+        {            
+            @Override
+            public void keyPressed(KeyEvent e) 
+            {        
+                int kk = e.getKeyCode();
+                if(kk == KeyEvent.VK_SPACE) {}
+                if(kk == KeyEvent.VK_LEFT) {xx -= 25;}
+                if(kk == KeyEvent.VK_RIGHT) {xx += 25;}
+                if(kk == KeyEvent.VK_UP) {yy -= 25;}    
+                if(kk == KeyEvent.VK_DOWN) {yy += 25;}
+                playerRectangle = gp2.player.getBounds();
+                gp4.player.setBounds(new Rectangle(xx, yy, 100, 100));
+                repaint();
+                
+                //check for intersection between player piece and campuses
+                if (playerRectangle.intersects(gp4.s1.getstarzRectangle()))
+                {
+                    gp4.s1.setIcon(new ImageIcon(""));
+                    repaint();
+                    revalidate();
+                }
+                else if (playerRectangle.intersects(gp4.s2.getstarzRectangle()))
+                {
+                    gp4.s2.setIcon(new ImageIcon(""));
+                    repaint();
+                    revalidate();
+                }
+                else if (playerRectangle.intersects(gp4.s3.getstarzRectangle()))
+                {
+                    gp4.s3.setIcon(new ImageIcon(""));
+                    repaint();
+                    revalidate();
+                }
+                else if (playerRectangle.intersects(gp4.dS.getdarkStarRectangle())) 
+                {
+                    remove(layout.getLayoutComponent(BorderLayout.CENTER));
+                    add(np, "Center");
+                    repaint();
+                    revalidate();
+                }
+            }            
+        });
     }    
     
     public void actionPerformed(ActionEvent event)

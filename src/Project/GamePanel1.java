@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
+import javax.sound.sampled.*;
 import javax.swing.*;
 
 /**
@@ -18,7 +21,7 @@ import javax.swing.*;
  */
 public class GamePanel1 extends JPanel implements ActionListener, MouseListener
 {
-    Timer tmrBug;
+    Timer tmrButton;
     Timer tmrFlash;
     int time = 0;
     int score = 0;
@@ -29,6 +32,8 @@ public class GamePanel1 extends JPanel implements ActionListener, MouseListener
     int gameSpeed = 3;
     JButton cb;
     JLabel lblScore;
+    File boo;
+    File whoo;
     
     
     GamePanel1()
@@ -37,8 +42,10 @@ public class GamePanel1 extends JPanel implements ActionListener, MouseListener
         setLayout(null);
         setBackground(new Color(240, 240, 240));        
         cb = new JButton();
-        cb.setIcon(new ImageIcon("images/bug.jpg"));
-        cb.setBounds(100, 300, 70, 70);
+        cb.setIcon(new ImageIcon("images/mj.gif"));
+        whoo = new File("sounds/whoo.wav");
+        boo = new File("sounds/boo.wav");
+        cb.setBounds(100, 300, 70, 116);
         cb.setOpaque(false);
         cb.setContentAreaFilled(false);
         cb.setBorderPainted(false);
@@ -48,15 +55,16 @@ public class GamePanel1 extends JPanel implements ActionListener, MouseListener
         lblScore = new JLabel("Score: 0"); 
         lblScore.setBounds(50, 50, 100, 25);
         add(lblScore);
-        tmrBug = new Timer(10, this);  
+        tmrButton = new Timer(10, this);  
         tmrFlash = new Timer(100, this);
-        tmrBug.start();
+        tmrButton.start();
         
         cb.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e) 
             {
+                playSound(whoo);
                 score++;
                 lblScore.setText("Score: " + score);
                 setBackground(Color.green);
@@ -69,13 +77,13 @@ public class GamePanel1 extends JPanel implements ActionListener, MouseListener
     public void actionPerformed(ActionEvent ae) 
     {
         Object obj = ae.getSource();
-        if (obj == tmrBug)
+        if (obj == tmrButton)
         {
             if(btnX > 1130 || btnX < 0)
             {
                 xDirection = xDirection * -1;                                         
             }                   
-            if(btnY > 660 || btnY < 0)
+            if(btnY > 620 || btnY < 0)
             {
                 yDirection = yDirection * -1;
             }
@@ -107,16 +115,33 @@ public class GamePanel1 extends JPanel implements ActionListener, MouseListener
         }
     }
     
+    public void playSound(File sound)
+    {
+        try
+        {
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(sound));
+            clip.start();
+        }
+        catch(IOException | LineUnavailableException | UnsupportedAudioFileException e)
+        {
+            //if sound fails, who cares?
+        }
+    }
+    
     @Override
     public void paintComponent(Graphics g)
     {
-        super.paintComponent(g);
+        super.paintComponent(g); 
+        Image myImage = Toolkit.getDefaultToolkit().getImage("images/stage.jpg");
+        g.drawImage(myImage, 0, 0, this);
         requestFocusInWindow();
     }
 
     @Override
     public void mouseClicked(MouseEvent e) 
     {
+       playSound(boo);
        setBackground(Color.red);
        tmrFlash.start();
     }

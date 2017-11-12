@@ -15,7 +15,7 @@ import java.awt.event.*;
 public class MainPanel extends JPanel implements ActionListener
 {
     
-    JPanel start;
+    //JPanel start;
     OptionsPanel ops;
     MenuBar mb;
     NavigationPanel np;
@@ -23,7 +23,7 @@ public class MainPanel extends JPanel implements ActionListener
     InstructionsPanel ip;
     BorderLayout layout;
     Rectangle playerRectangle;
-    int timerTick;
+    int timerTick = 1000;
     GamePanel1 gp1;
     GamePanel2 gp2;
     GamePanel3 gp3;
@@ -32,6 +32,7 @@ public class MainPanel extends JPanel implements ActionListener
     int xx = 300;
     int yy = 300;
     int game1Score;
+    int game3Score;
     String difficulty;
             
             
@@ -42,22 +43,26 @@ public class MainPanel extends JPanel implements ActionListener
         setVisible(true);
         layout = new BorderLayout();
         setLayout(layout);        
-        
+        //instantiate individual panels
         mb = new MenuBar();
         np = new NavigationPanel();
         ip = new InstructionsPanel();
         gp1 = new GamePanel1();
         gp2 = new GamePanel2();
         gp3 = new GamePanel3();
+        gp4 = new GamePanel4();
+        gp5 = new GamePanel5();
+        //add initial panels
         add(mb, "North");  
         add(np, "Center");
+        //apply listeners to appropriate components
         mb.btnOptions.addActionListener((this));
         mb.btnBack.addActionListener((this));
         mb.btnInstructions.addActionListener((this));
         op.save.addActionListener((this));
         gp1.cb.addActionListener((this));
-        mb.lblPlayer.setText("Hello there!");
-        
+        //set label text
+        mb.lblPlayer.setText("Hello there!");        
           
         np.addKeyListener(new KeyAdapter()
         {            
@@ -75,8 +80,7 @@ public class MainPanel extends JPanel implements ActionListener
                 repaint();
                 //check for intersection between player piece and campuses
                 if (playerRectangle.intersects(np.campus1.getCampusRectangle()))
-                {
-                    np.campus1.setIcon(new ImageIcon("images/complete.png"));
+                {                    
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(gp1, "Center");
                     repaint();
@@ -101,7 +105,6 @@ public class MainPanel extends JPanel implements ActionListener
                 else if (playerRectangle.intersects(np.campus4.getCampusRectangle()))
                 {
                     np.campus4.setIcon(new ImageIcon("images/complete.png"));
-                    gp4 = new GamePanel4();
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(gp4, "Center");
                     repaint();
@@ -110,7 +113,6 @@ public class MainPanel extends JPanel implements ActionListener
                 else if (playerRectangle.intersects(np.campus5.getCampusRectangle()))
                 {
                     np.campus5.setIcon(new ImageIcon("images/complete.png"));
-                    gp5 = new GamePanel5();
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(gp5, "Center");
                     repaint();
@@ -118,13 +120,18 @@ public class MainPanel extends JPanel implements ActionListener
                 }
             } 
         });
-        
-        gp1.cb.addActionListener(new ActionListener(){
+        /**
+         * Game Panel 1: check for at least 5 hits
+         */
+        gp1.cb.addActionListener(new ActionListener()
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) 
+            {
                 game1Score++;
                 if (game1Score >=5)
                 {
+                    np.campus1.setIcon(new ImageIcon("images/complete.png"));
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(np, "Center");
                     xx = 300;
@@ -133,8 +140,28 @@ public class MainPanel extends JPanel implements ActionListener
                     repaint();
                     revalidate();
                 }
-            }
-            
+            }            
+        });
+        /**
+         * Game Panel 3: check if paddle missed the ball
+         */
+        gp3.timer.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) 
+            {
+                if (gp3.fail == true)
+                {
+                    game3Score = gp3.score;
+                    gp3.fail = false;
+                    remove(layout.getLayoutComponent(BorderLayout.CENTER));
+                    add(np, "Center");
+                    xx = 300;
+                    yy = 300;
+                    np.player.setBounds(new Rectangle(xx, yy, 100, 100));
+                    repaint();
+                    revalidate();
+                }
+            }            
         });
         
         gp2.addKeyListener(new KeyAdapter()
@@ -184,9 +211,9 @@ public class MainPanel extends JPanel implements ActionListener
                     revalidate();
                 }
             }            
-        }); 
+        });         
     }    
-    
+    //menu bar actions
     public void actionPerformed(ActionEvent event)
     {
         Object obj = event.getSource();        
@@ -202,8 +229,7 @@ public class MainPanel extends JPanel implements ActionListener
         
         if(obj == mb.btnStart)
         {
-            setVisible(false);
-            start.setVisible(true);
+            mb.count.setDelay(timerTick);
         }
         
         if (obj == mb.btnBack)
@@ -229,7 +255,7 @@ public class MainPanel extends JPanel implements ActionListener
         if (obj == op.save)
         {
             op.playerName = op.nameEntry.getText();
-                
+            //set player icon    
             if (op.player1.isSelected())
             {
                 op.playerSelection = 1;
@@ -242,7 +268,7 @@ public class MainPanel extends JPanel implements ActionListener
             {
                 op.playerSelection = 3;
             }
-            
+            //set game speed
             if (op.speed1.isSelected())
             {
                 difficulty = "slow";
@@ -255,7 +281,7 @@ public class MainPanel extends JPanel implements ActionListener
             {
                 difficulty = "fast";
             }
-            
+            //set timer speed
             if (op.timer1.isSelected())
             {
                 timerTick = 2000;

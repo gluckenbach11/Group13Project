@@ -41,7 +41,6 @@ public class GameFrame extends JFrame implements ActionListener
         Object obj = e.getSource();
         if (obj == timer)
         {        
-            System.out.println("timer");
             add(mp);
             sp.setVisible(false);
             mp.setVisible(true);

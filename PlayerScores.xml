@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_121" class="java.beans.XMLDecoder">
+ <object class="Project.PlayerScore">
+  <void property="playerName">
+   <string>Test</string>
+  </void>
+ </object>
+ <object class="Project.PlayerScore">
+  <void property="playerName">
+   <string>Test2</string>
+  </void>
+ </object>
+ <object class="Project.PlayerScore">
+  <void property="playerName">
+   <string>Test3</string>
+  </void>
+ </object>
+</java>

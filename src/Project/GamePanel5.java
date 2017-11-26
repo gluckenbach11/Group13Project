@@ -26,6 +26,7 @@ public class GamePanel5 extends JPanel
     JButton btnCheck;
     JButton btnNext;
     int questionIndex;
+    int score;
     
     GamePanel5()
     {
@@ -88,6 +89,7 @@ public class GamePanel5 extends JPanel
                 if (checkAnswer())
                 {
                     lblResult.setText("Correct");
+                    score++;
                 }
                 else
                 {

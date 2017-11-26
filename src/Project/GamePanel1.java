@@ -53,6 +53,7 @@ public class GamePanel1 extends JPanel implements ActionListener, MouseListener
         addMouseListener((this));
         add(cb);
         lblScore = new JLabel("Score: 0"); 
+        lblScore.setForeground(Color.white);
         lblScore.setBounds(50, 50, 100, 25);
         add(lblScore);
         tmrButton = new Timer(10, this);  

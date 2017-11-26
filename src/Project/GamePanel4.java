@@ -15,6 +15,7 @@ public class GamePanel4 extends JPanel implements ActionListener{
     
     int xx = 300;
     int yy = 300;
+    int score;
     
     darkStar dS = new darkStar(130, 100);
     starz s1    = new starz(230  , 120);

@@ -16,6 +16,7 @@ public class MainPanel extends JPanel implements ActionListener
     NavigationPanel np;
     OptionsPanel op;
     InstructionsPanel ip;
+    ScorePanel sp;
     BorderLayout layout;
     Rectangle playerRectangle;
     int timerTick = 1000;
@@ -24,8 +25,11 @@ public class MainPanel extends JPanel implements ActionListener
     GamePanel3 gp3;
     GamePanel4 gp4;
     GamePanel5 gp5;
+    PlayerScore pScore;
+    XMLReadWriter xml;
     int xx = 300;
     int yy = 300;
+    int game1Misses;
     int game1Score;
     int game3Score;
     String difficulty;
@@ -42,11 +46,14 @@ public class MainPanel extends JPanel implements ActionListener
         mb = new MenuBar();
         np = new NavigationPanel();
         ip = new InstructionsPanel();
+        sp = new ScorePanel();
         gp1 = new GamePanel1();
         gp2 = new GamePanel2();
         gp3 = new GamePanel3();
         gp4 = new GamePanel4();
         gp5 = new GamePanel5();
+        pScore = new PlayerScore();
+        xml = new XMLReadWriter();
         //add initial panels
 
         add(mb, "North");  
@@ -55,10 +62,15 @@ public class MainPanel extends JPanel implements ActionListener
         mb.btnOptions.addActionListener((this));
         mb.btnBack.addActionListener((this));
         mb.btnInstructions.addActionListener((this));
+        mb.btnScores.addActionListener((this));
         op.save.addActionListener((this));
         gp1.cb.addActionListener((this));
         //set label text
-        mb.lblPlayer.setText("Hello there!");        
+        mb.lblPlayer.setText("Hello there!"); 
+        //next lines were for testing only
+        //xml.writeXML(pScore);
+        //xml.openXMLReader();
+        //PlayerScore ps1 = (PlayerScore)xml.readXML();
           
         np.addKeyListener(new KeyAdapter()
         {            
@@ -119,14 +131,15 @@ public class MainPanel extends JPanel implements ActionListener
         /**
          * Game Panel 1: check for at least 5 hits
          */
-        gp1.cb.addActionListener(new ActionListener()
-        {
+        gp1.addMouseListener(new MouseListener()
+        {            
             @Override
-            public void actionPerformed(ActionEvent e) 
+            public void mouseClicked(MouseEvent e) 
             {
-                game1Score++;
-                if (game1Score >=5)
+                game1Misses++;
+                if (game1Misses >=5)
                 {
+                    pScore.setGame1Score(gp1.score);
                     np.campus1.setIcon(new ImageIcon("images/complete.png"));
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(np, "Center");
@@ -136,7 +149,19 @@ public class MainPanel extends JPanel implements ActionListener
                     repaint();
                     revalidate();
                 }
-            }            
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+
+            @Override
+            public void mouseExited(MouseEvent e) {}
         });
         /**
          * Game Panel 3: check if paddle missed the ball
@@ -147,7 +172,9 @@ public class MainPanel extends JPanel implements ActionListener
             {
                 if (gp3.fail == true)
                 {
-                    game3Score = gp3.score;
+                    pScore.setGame3Score(gp3.score);
+                    //game3Score = gp3.score;
+                    //reset fail status
                     gp3.fail = false;
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(np, "Center");
@@ -178,36 +205,42 @@ public class MainPanel extends JPanel implements ActionListener
                 //check for intersection between player piece and campuses
                 if (playerRectangle.intersects(gp2.s1.getstarzRectangle()))
                 {
+                    gp2.score++;
                     gp2.s1.setIcon(new ImageIcon(""));
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp2.s2.getstarzRectangle()))
                 {
+                    gp2.score++;
                     gp2.s2.setIcon(new ImageIcon(""));
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp2.s3.getstarzRectangle()))
                 {
+                    gp2.score++;
                     gp2.s3.setIcon(new ImageIcon(""));
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp2.s4.getstarzRectangle()))
                 {
+                    gp2.score++;
                     gp2.s4.setIcon(new ImageIcon(""));
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp2.s5.getstarzRectangle()))
                 {
+                    gp2.score++;
                     gp2.s5.setIcon(new ImageIcon(""));
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp2.s6.getstarzRectangle()))
                 {
+                    gp2.score++;
                     gp2.s6.setIcon(new ImageIcon(""));
                     repaint();
                     revalidate();
@@ -220,18 +253,21 @@ public class MainPanel extends JPanel implements ActionListener
                 }
                 else if (playerRectangle.intersects(gp2.s8.getstarzRectangle()))
                 {
+                    gp2.score++;
                     gp2.s8.setIcon(new ImageIcon(""));
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp2.s9.getstarzRectangle()))
                 {
+                    gp2.score++;
                     gp2.s9.setIcon(new ImageIcon(""));
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp2.s10.getstarzRectangle()))
                 {
+                    gp2.score++;
                     gp2.s10.setIcon(new ImageIcon(""));
                     repaint();
                     revalidate();
@@ -239,6 +275,7 @@ public class MainPanel extends JPanel implements ActionListener
             }            
 
         });
+        
         gp4.addKeyListener(new KeyAdapter()
         {            
             @Override
@@ -254,27 +291,31 @@ public class MainPanel extends JPanel implements ActionListener
                 gp4.player.setBounds(new Rectangle(xx, yy, 100, 100));
                 repaint();
                 
-                //check for intersection between player piece and campuses
+                //check for intersection between player piece and stars
                 if (playerRectangle.intersects(gp4.s1.getstarzRectangle()))
                 {
                     gp4.s1.setIcon(new ImageIcon(""));
+                    gp4.score++;
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp4.s2.getstarzRectangle()))
                 {
                     gp4.s2.setIcon(new ImageIcon(""));
+                    gp4.score++;
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp4.s3.getstarzRectangle()))
                 {
                     gp4.s3.setIcon(new ImageIcon(""));
+                    gp4.score++;
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp4.dS.getdarkStarRectangle())) 
                 {
+                    pScore.setGame4Score(gp4.score);
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(np, "Center");
                     repaint();
@@ -305,6 +346,8 @@ public class MainPanel extends JPanel implements ActionListener
         
         if (obj == mb.btnBack)
         {
+            pScore.setGame5Score(gp5.score);
+            pScore.setGame2Score(gp2.score);
             mb.lblPlayer.setText("Hello, " + op.nameEntry.getText());
             remove(layout.getLayoutComponent(BorderLayout.CENTER));
             add(np, "Center");
@@ -323,9 +366,18 @@ public class MainPanel extends JPanel implements ActionListener
             revalidate();
         }
         
+        if (obj == mb.btnScores)
+        {
+            remove(layout.getLayoutComponent(BorderLayout.CENTER));
+            add(sp, "Center");
+            repaint();
+            revalidate();
+        }
+        
         if (obj == op.save)
         {
             op.playerName = op.nameEntry.getText();
+            pScore.setPlayerName(op.playerName);
             //set player icon    
             if (op.player1.isSelected())
             {

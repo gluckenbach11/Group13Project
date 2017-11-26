@@ -1,19 +1,15 @@
 package Project;
 
-import java.awt.event.*;
-import java.awt.Color;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- *
- * gluck
- */
+
 public class GamePanel2 extends JPanel{
     
     
     int xx = 300;
     int yy = 300;
+    int score;
     // Create Stars and their locations
     starz s1  = new starz(130  , 100);
     starz s2  = new starz(230  , 120);

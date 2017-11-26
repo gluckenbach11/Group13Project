@@ -20,6 +20,7 @@ public class MenuBar extends JPanel
     JButton btnStart;
     JButton btnOptions;
     JButton btnInstructions;
+    JButton btnScores;
     JLabel lblPlayer;
     JLabel timer;
     Timer count;
@@ -36,6 +37,7 @@ public class MenuBar extends JPanel
         btnStart = new JButton("Start");
         btnOptions = new JButton("Options");
         btnInstructions = new JButton("Instructions");
+        btnScores = new JButton("Scores");
         lblPlayer = new JLabel();
         timer = new JLabel("Click Start to Begin >>>");
         timerMultiplier = 1.0;
@@ -66,6 +68,7 @@ public class MenuBar extends JPanel
         add(btnStart);        
         add(btnInstructions);
         add(btnOptions);
+        add(btnScores);
         add(btnBack);
         add(lblPlayer);
     }

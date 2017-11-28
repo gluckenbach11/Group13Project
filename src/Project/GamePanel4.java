@@ -38,9 +38,7 @@ public class GamePanel4 extends JPanel implements ActionListener{
         add(s2);
         add(s3);
         
-        
-        
-        tim = new Timer(1000,this);
+        tim = new Timer(2000,this);
         tim.start();
         
     }

@@ -112,7 +112,7 @@ public class MainPanel extends JPanel implements ActionListener
                 }
                 else if (playerRectangle.intersects(np.campus4.getCampusRectangle()))
                 {
-                    np.campus4.setIcon(new ImageIcon("images/complete.png"));
+                    //np.campus4.setIcon(new ImageIcon("images/complete.png"));
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(gp4, "Center");
                     repaint();
@@ -189,6 +189,7 @@ public class MainPanel extends JPanel implements ActionListener
         
         gp2.addKeyListener(new KeyAdapter()
         {            
+            int starZZZ = 10;
             @Override
             public void keyPressed(KeyEvent e) 
             {        
@@ -202,73 +203,75 @@ public class MainPanel extends JPanel implements ActionListener
                 gp2.player.setBounds(new Rectangle(xx, yy, 100, 100));
                 repaint();
                 
-                //check for intersection between player piece and campuses
+                // Check for intersection between player piece and campuses
                 if (playerRectangle.intersects(gp2.s1.getstarzRectangle()))
                 {
                     gp2.score++;
-                    gp2.s1.setIcon(new ImageIcon(""));
+                    gp2.remove(gp2.s1);
+                    System.out.println(gp2.score);
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp2.s2.getstarzRectangle()))
                 {
                     gp2.score++;
-                    gp2.s2.setIcon(new ImageIcon(""));
+                    gp2.remove(gp2.s2);
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp2.s3.getstarzRectangle()))
                 {
                     gp2.score++;
-                    gp2.s3.setIcon(new ImageIcon(""));
+                    gp2.remove(gp2.s3);
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp2.s4.getstarzRectangle()))
                 {
                     gp2.score++;
-                    gp2.s4.setIcon(new ImageIcon(""));
+                    gp2.remove(gp2.s4);
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp2.s5.getstarzRectangle()))
                 {
                     gp2.score++;
-                    gp2.s5.setIcon(new ImageIcon(""));
+                    gp2.remove(gp2.s5);
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp2.s6.getstarzRectangle()))
                 {
                     gp2.score++;
-                    gp2.s6.setIcon(new ImageIcon(""));
+                    gp2.remove(gp2.s6);
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp2.s7.getstarzRectangle()))
                 {
-                    gp2.s7.setIcon(new ImageIcon(""));
+                    gp2.score++;
+                    gp2.remove(gp2.s7);
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp2.s8.getstarzRectangle()))
                 {
                     gp2.score++;
-                    gp2.s8.setIcon(new ImageIcon(""));
+                    gp2.remove(gp2.s8);
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp2.s9.getstarzRectangle()))
                 {
                     gp2.score++;
-                    gp2.s9.setIcon(new ImageIcon(""));
+                    gp2.remove(gp2.s9);
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp2.s10.getstarzRectangle()))
                 {
                     gp2.score++;
-                    gp2.s10.setIcon(new ImageIcon(""));
+                    gp2.remove(gp2.s10);
                     repaint();
                     revalidate();
                 }
@@ -294,21 +297,18 @@ public class MainPanel extends JPanel implements ActionListener
                 //check for intersection between player piece and stars
                 if (playerRectangle.intersects(gp4.s1.getstarzRectangle()))
                 {
-                    gp4.s1.setIcon(new ImageIcon(""));
                     gp4.score++;
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp4.s2.getstarzRectangle()))
                 {
-                    gp4.s2.setIcon(new ImageIcon(""));
                     gp4.score++;
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(gp4.s3.getstarzRectangle()))
                 {
-                    gp4.s3.setIcon(new ImageIcon(""));
                     gp4.score++;
                     repaint();
                     revalidate();
@@ -316,6 +316,7 @@ public class MainPanel extends JPanel implements ActionListener
                 else if (playerRectangle.intersects(gp4.dS.getdarkStarRectangle())) 
                 {
                     pScore.setGame4Score(gp4.score);
+                    np.campus4.setIcon(new ImageIcon("images/complete.png"));
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(np, "Center");
                     repaint();

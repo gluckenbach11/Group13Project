@@ -30,6 +30,7 @@ public class GamePanel3 extends JPanel implements ActionListener, MouseMotionLis
     public int score = 0;
     boolean fail = false;
     Timer timer;
+    Boolean complete = false;
     
     GamePanel3()
     {

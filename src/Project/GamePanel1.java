@@ -34,6 +34,7 @@ public class GamePanel1 extends JPanel implements ActionListener, MouseListener
     JLabel lblScore;
     File boo;
     File whoo;
+    Boolean complete = false;
     
     
     GamePanel1()

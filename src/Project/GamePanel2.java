@@ -10,6 +10,7 @@ public class GamePanel2 extends JPanel{
     int xx = 300;
     int yy = 300;
     int score;
+    Boolean complete = false;
     // Create Stars and their locations
     starz s1  = new starz(130  , 100);
     starz s2  = new starz(230  , 120);

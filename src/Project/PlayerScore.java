@@ -11,7 +11,8 @@ package Project;
  */
 public class PlayerScore 
 {
-    private String playerName;
+    private String playerName = "";
+    private String date = ""; 
     private int game1Score;
     private int game2Score;
     private int game3Score;
@@ -20,8 +21,7 @@ public class PlayerScore
     private int playTime;
     
     public PlayerScore()
-    {
-        this.playerName = "";      
+    {      
     }
 
     /**
@@ -120,5 +120,19 @@ public class PlayerScore
      */
     public void setPlayTime(int playTime) {
         this.playTime = playTime;
+    }
+
+    /**
+     * @return the date
+     */
+    public String getDate() {
+        return date;
+    }
+
+    /**
+     * @param date the date to set
+     */
+    public void setDate(String date) {
+        this.date = date;
     }
 }

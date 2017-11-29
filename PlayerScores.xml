@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="1.8.0_121" class="java.beans.XMLDecoder">
  <object class="Project.PlayerScore">
-  <void property="playerName">
-   <string>Test</string>
+  <void property="date">
+   <string>2017-11-27</string>
   </void>
- </object>
- <object class="Project.PlayerScore">
-  <void property="playerName">
-   <string>Test2</string>
+  <void property="game2Score">
+   <int>22</int>
   </void>
- </object>
- <object class="Project.PlayerScore">
   <void property="playerName">
-   <string>Test3</string>
+   <string>Slut</string>
   </void>
  </object>
 </java>

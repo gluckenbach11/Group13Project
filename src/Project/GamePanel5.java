@@ -5,119 +5,135 @@
  */
 package Project;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.*;
 
 /**
  *
  * @author gluck
  */
-public class GamePanel5 extends JPanel
+public class GamePanel5 extends JPanel implements ActionListener
 {
-    ArrayList<Question> questionList; 
-    boolean correct = false;
-    JLabel lblQuestion;
-    JLabel lblResult;
-    JLabel lblAnswer;
-    JTextField tfInputAnswer;
-    JButton btnCheck;
-    JButton btnNext;
-    int questionIndex;
+    int x1 = 100;
+    int y1 = -100;
+    int x2 = 500;
+    int y2 = -500;
+    int x3 = 900;
+    int y3 = -300;
+    int gameSpeed = 2;
+    RoboDancer rb1;
+    RoboDancer rb2;
+    RoboDancer rb3;
+    JButton dangerZone;
+    Timer fallTimer;
     int score;
+    int misses;
+    Boolean complete = false;
     
     GamePanel5()
     {
-        questionList = new ArrayList<>();
-        addQuestions();
-        tfInputAnswer = new JTextField();
-        btnNext = new JButton("Next");
-        btnCheck = new JButton("Check Answer");
-        lblAnswer = new JLabel("Answer: ");
+        super();
         setLayout(null);
-        setBackground(Color.yellow);
-        setVisible(true);
-        lblQuestion = new JLabel(questionList.get(questionIndex).query);
-        lblResult = new JLabel();
+        rb1 = new RoboDancer();
+        rb2 = new RoboDancer();
+        rb3 = new RoboDancer();
+        dangerZone = new JButton("Click to Start");
+        rb1.setBounds(x1, y1, 100, 100);
+        rb2.setBounds(x2, y2, 100, 100);
+        rb3.setBounds(x3, y3, 100, 100);
+        dangerZone.setBounds(0, 700, 1200, 25);
+        dangerZone.setBackground(Color.red);
+        dangerZone.addActionListener((this));
+        add(rb1);
+        add(rb2);
+        add(rb3);
+        add(dangerZone);
+        fallTimer = new Timer(100, this);
         
-        lblQuestion.setBounds(100, 100, 300, 30);
-        lblAnswer.setBounds(100, 150, 100, 30);
-        tfInputAnswer.setBounds(250, 150, 200, 30);
-        btnCheck.setBounds(100, 200, 150, 30);
-        btnNext.setBounds(275, 200, 100, 30);
-        lblResult.setBounds(100, 250, 100, 30);
-        
-        add(lblQuestion);
-        add(lblAnswer);
-        add(tfInputAnswer);
-        add(btnCheck);
-        add(btnNext);
-        add(lblResult);
-        
-        btnNext.addActionListener(new ActionListener()
+        rb1.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e) 
             {
-                tfInputAnswer.setEditable(true);
-                lblResult.setText(null);
-                tfInputAnswer.setText(null);
-                btnCheck.setVisible(true);
-                questionIndex++;
-                if (questionIndex < questionList.size())
-                {
-                    lblQuestion.setText(questionList.get(questionIndex).query);
-                }
-                else
-                {
-                    lblQuestion.setText("That's all she wrote...");
-                    remove(lblAnswer);
-                    remove(tfInputAnswer);
-                    remove(btnCheck);
-                    remove(btnNext);
-                    remove(lblResult);
-                }
+                y1 = -100;
+                rb1.setLocation(x1, y1);
+                score++;
+                repaint();  
             }            
         });
         
-        btnCheck.addActionListener(new ActionListener()
+        rb2.addActionListener(new ActionListener()
         {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                if (checkAnswer())
-                {
-                    lblResult.setText("Correct");
-                    score++;
-                }
-                else
-                {
-                    lblResult.setText("Not even close");
-                }
-                repaint();
-                tfInputAnswer.setEditable(false);
-            }
-            
+            public void actionPerformed(ActionEvent e) 
+            {
+                y2 = -500;
+                rb2.setLocation(x2, y2);
+                score++;
+                repaint();  
+            }            
+        });
+        
+        rb3.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e) 
+            {
+                y3 = -300;
+                rb1.setLocation(x3, y3);
+                score++;
+                repaint();  
+            }            
         });
     }
-    
-    public void addQuestions()
+
+    @Override
+    public void actionPerformed(ActionEvent e) 
     {
-        questionList.add(new Question("What color are leaves?", "green"));
-        questionList.add(new Question("How many molecules are in a mole?", "6.02 x 10^23"));
-    }
-    
-    public boolean checkAnswer()
-    {
-        if (questionList.get(questionIndex).answer.equalsIgnoreCase(tfInputAnswer.getText()))
+        Object obj = e.getSource();
+        
+        if(obj == fallTimer)
         {
-            correct = true;
+            y1 += 5 * gameSpeed;
+            y2 += 5 * gameSpeed;
+            y3 += 5 * gameSpeed;
+            rb1.setLocation(x1, y1);
+            rb2.setLocation(x2, y2);
+            rb3.setLocation(x3, y3);
+            
+            if (rb1.getBounds(new Rectangle()).intersects(dangerZone.getBounds(new Rectangle())))
+            {
+                y1 = -100;
+                misses++;
+            }
+            if (rb2.getBounds(new Rectangle()).intersects(dangerZone.getBounds(new Rectangle())))
+            {
+                y2 = -500;
+                misses++;
+            }
+            if (rb3.getBounds(new Rectangle()).intersects(dangerZone.getBounds(new Rectangle())))
+            {
+                y3 = -300;
+                misses++;
+            }
+            //mark complete if more than 5 misses
+            if(misses >= 5)
+            {
+                complete = true;
+            }
+            //cycle the colors
+            setBackground(new Color(new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat()));
+            dangerZone.setBackground(new Color(new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat()));
+            repaint();
         }
-        else
+        
+        if(obj == dangerZone)
         {
-            correct = false;
+            fallTimer.start();
+            dangerZone.setText("Don't let them touch me!!");
         }
-        return correct;
     }
 }

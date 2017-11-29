@@ -3,6 +3,10 @@ package Project;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 /**
  *
  * @author gluck
@@ -129,7 +133,7 @@ public class MainPanel extends JPanel implements ActionListener
             } 
         });
         /**
-         * Game Panel 1: check for at least 5 hits
+         * Game Panel 1: check for at 5 misses
          */
         gp1.addMouseListener(new MouseListener()
         {            
@@ -140,6 +144,7 @@ public class MainPanel extends JPanel implements ActionListener
                 if (game1Misses >=5)
                 {
                     pScore.setGame1Score(gp1.score);
+                    gp1.complete = true;
                     np.campus1.setIcon(new ImageIcon("images/complete.png"));
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(np, "Center");
@@ -148,6 +153,11 @@ public class MainPanel extends JPanel implements ActionListener
                     np.player.setBounds(new Rectangle(xx, yy, 100, 100));
                     repaint();
                     revalidate();
+                    //check for completion of all game panels
+                    if(checkForCompletion())
+                    {
+                        writePlayerScore();
+                    }
                 }
             }
 
@@ -173,7 +183,7 @@ public class MainPanel extends JPanel implements ActionListener
                 if (gp3.fail == true)
                 {
                     pScore.setGame3Score(gp3.score);
-                    //game3Score = gp3.score;
+                    gp3.complete = true;
                     //reset fail status
                     gp3.fail = false;
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
@@ -183,6 +193,12 @@ public class MainPanel extends JPanel implements ActionListener
                     np.player.setBounds(new Rectangle(xx, yy, 100, 100));
                     repaint();
                     revalidate();
+                    
+                    //check for completion of all game panels
+                    if(checkForCompletion())
+                    {
+                        writePlayerScore();
+                    }
                 }
             }            
         });
@@ -275,6 +291,14 @@ public class MainPanel extends JPanel implements ActionListener
                     repaint();
                     revalidate();
                 }
+                
+                //at some point this game ends 
+                gp2.complete = true;
+                //check for completion of all game panels
+                    if(checkForCompletion())
+                    {
+                        writePlayerScore();
+                    }
             }            
 
         });
@@ -316,15 +340,22 @@ public class MainPanel extends JPanel implements ActionListener
                 else if (playerRectangle.intersects(gp4.dS.getdarkStarRectangle())) 
                 {
                     pScore.setGame4Score(gp4.score);
+                    gp4.complete = true;
                     np.campus4.setIcon(new ImageIcon("images/complete.png"));
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(np, "Center");
                     repaint();
                     revalidate();
+                    
+                    //check for completion of all game panels
+                    if(checkForCompletion())
+                    {
+                        writePlayerScore();
+                    }
                 }
             }            
         });      
-
+        gp5.complete = true;
     }    
     //menu bar actions
     public void actionPerformed(ActionEvent event)
@@ -429,7 +460,19 @@ public class MainPanel extends JPanel implements ActionListener
             repaint();
             revalidate();
         }
-    }    
+    }  
+    
+    public Boolean checkForCompletion()
+    {
+        return gp1.complete && gp2.complete && gp3.complete && gp4.complete && gp5.complete;
+    }
+    
+    public void writePlayerScore()
+    {
+        String date = LocalDate.now().toString();
+        pScore.setDate(date);
+        xml.writeXML(pScore);
+    }
     
     @Override
     public void paintComponent(Graphics g) 

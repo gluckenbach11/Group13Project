@@ -3,10 +3,7 @@ package Project;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 /**
  *
  * @author gluck
@@ -45,7 +42,8 @@ public class MainPanel extends JPanel implements ActionListener
         setBackground(Color.blue);
         setVisible(true);
         layout = new BorderLayout();
-        setLayout(layout);        
+        setLayout(layout);  
+        
         //instantiate individual panels
         mb = new MenuBar();
         np = new NavigationPanel();
@@ -58,10 +56,11 @@ public class MainPanel extends JPanel implements ActionListener
         gp5 = new GamePanel5();
         pScore = new PlayerScore();
         xml = new XMLReadWriter();
+        
         //add initial panels
-
         add(mb, "North");  
         add(np, "Center");
+        
         //apply listeners to appropriate components
         mb.btnOptions.addActionListener((this));
         mb.btnBack.addActionListener((this));
@@ -69,13 +68,11 @@ public class MainPanel extends JPanel implements ActionListener
         mb.btnScores.addActionListener((this));
         op.save.addActionListener((this));
         gp1.cb.addActionListener((this));
+        
         //set label text
         mb.lblPlayer.setText("Hello there!"); 
-        //next lines were for testing only
-        //xml.writeXML(pScore);
-        //xml.openXMLReader();
-        //PlayerScore ps1 = (PlayerScore)xml.readXML();
-          
+        
+        //inner listeners for panel actions  
         np.addKeyListener(new KeyAdapter()
         {            
             @Override
@@ -90,6 +87,7 @@ public class MainPanel extends JPanel implements ActionListener
                 playerRectangle = np.player.getBounds();
                 np.player.setBounds(new Rectangle(xx, yy, 100, 100));
                 repaint();
+                
                 //check for intersection between player piece and campuses
                 if (playerRectangle.intersects(np.campus1.getCampusRectangle()))
                 {                    
@@ -107,8 +105,7 @@ public class MainPanel extends JPanel implements ActionListener
                     revalidate();
                 }
                 else if (playerRectangle.intersects(np.campus3.getCampusRectangle()))
-                {
-                    np.campus3.setIcon(new ImageIcon("images/complete.png"));
+                {                    
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(gp3, "Center");
                     repaint();
@@ -116,15 +113,13 @@ public class MainPanel extends JPanel implements ActionListener
                 }
                 else if (playerRectangle.intersects(np.campus4.getCampusRectangle()))
                 {
-                    //np.campus4.setIcon(new ImageIcon("images/complete.png"));
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(gp4, "Center");
                     repaint();
                     revalidate();
                 }
                 else if (playerRectangle.intersects(np.campus5.getCampusRectangle()))
-                {
-                    np.campus5.setIcon(new ImageIcon("images/complete.png"));
+                {                    
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(gp5, "Center");
                     repaint();
@@ -143,16 +138,15 @@ public class MainPanel extends JPanel implements ActionListener
                 game1Misses++;
                 if (game1Misses >=5)
                 {
-                    pScore.setGame1Score(gp1.score);
-                    gp1.complete = true;
                     np.campus1.setIcon(new ImageIcon("images/complete.png"));
+                    pScore.setGame1Score(gp1.score);
+                    gp1.complete = true;                    
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(np, "Center");
-                    xx = 300;
-                    yy = 300;
-                    np.player.setBounds(new Rectangle(xx, yy, 100, 100));
+                    resetPlayerPiece();
                     repaint();
                     revalidate();
+                    
                     //check for completion of all game panels
                     if(checkForCompletion())
                     {
@@ -176,21 +170,21 @@ public class MainPanel extends JPanel implements ActionListener
         /**
          * Game Panel 3: check if paddle missed the ball
          */
-        gp3.timer.addActionListener(new ActionListener(){
+        gp3.timer.addActionListener(new ActionListener()
+        {
             @Override
             public void actionPerformed(ActionEvent e) 
             {
                 if (gp3.fail == true)
                 {
+                    np.campus3.setIcon(new ImageIcon("images/complete.png"));
                     pScore.setGame3Score(gp3.score);
                     gp3.complete = true;
                     //reset fail status
                     gp3.fail = false;
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(np, "Center");
-                    xx = 300;
-                    yy = 300;
-                    np.player.setBounds(new Rectangle(xx, yy, 100, 100));
+                    resetPlayerPiece();
                     repaint();
                     revalidate();
                     
@@ -201,6 +195,33 @@ public class MainPanel extends JPanel implements ActionListener
                     }
                 }
             }            
+        });
+        /**
+         * Game Panel 5: check for 5 missed robots
+         */
+        gp5.fallTimer.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e) 
+            {
+                if (gp5.complete)
+                {
+                    np.campus5.setIcon(new ImageIcon("images/complete.png"));
+                    pScore.setGame5Score(gp5.score);
+                    gp5.fallTimer.stop();
+                    remove(layout.getLayoutComponent(BorderLayout.CENTER));
+                    add(np, "Center");
+                    resetPlayerPiece();
+                    repaint();
+                    revalidate();
+                    
+                    //check for completion of all game panels
+                    if(checkForCompletion())
+                    {
+                        writePlayerScore();
+                    }
+                }
+            }
         });
         
         gp2.addKeyListener(new KeyAdapter()
@@ -222,74 +243,84 @@ public class MainPanel extends JPanel implements ActionListener
                 // Check for intersection between player piece and campuses
                 if (playerRectangle.intersects(gp2.s1.getstarzRectangle()))
                 {
-                    gp2.score++;
                     gp2.remove(gp2.s1);
                     System.out.println(gp2.score);
                     repaint();
                     revalidate();
+                    gp2.score++;
                 }
                 else if (playerRectangle.intersects(gp2.s2.getstarzRectangle()))
                 {
-                    gp2.score++;
                     gp2.remove(gp2.s2);
+                    System.out.println(gp2.score);
                     repaint();
                     revalidate();
+                    gp2.score++;
                 }
                 else if (playerRectangle.intersects(gp2.s3.getstarzRectangle()))
                 {
-                    gp2.score++;
                     gp2.remove(gp2.s3);
+                    System.out.println(gp2.score);
                     repaint();
                     revalidate();
+                    gp2.score++;
                 }
                 else if (playerRectangle.intersects(gp2.s4.getstarzRectangle()))
                 {
-                    gp2.score++;
                     gp2.remove(gp2.s4);
+                    System.out.println(gp2.score);
                     repaint();
                     revalidate();
+                    gp2.score++;
                 }
                 else if (playerRectangle.intersects(gp2.s5.getstarzRectangle()))
                 {
-                    gp2.score++;
                     gp2.remove(gp2.s5);
+                    System.out.println(gp2.score);
                     repaint();
                     revalidate();
+                    gp2.score++;
                 }
                 else if (playerRectangle.intersects(gp2.s6.getstarzRectangle()))
                 {
-                    gp2.score++;
                     gp2.remove(gp2.s6);
+                    System.out.println(gp2.score);
                     repaint();
                     revalidate();
+                    gp2.score++;
                 }
                 else if (playerRectangle.intersects(gp2.s7.getstarzRectangle()))
                 {
-                    gp2.score++;
                     gp2.remove(gp2.s7);
+                    System.out.println(gp2.score);
                     repaint();
                     revalidate();
+                    gp2.score++;
                 }
                 else if (playerRectangle.intersects(gp2.s8.getstarzRectangle()))
                 {
-                    gp2.score++;
                     gp2.remove(gp2.s8);
+                    System.out.println(gp2.score);
                     repaint();
                     revalidate();
+                    gp2.score++;
                 }
                 else if (playerRectangle.intersects(gp2.s9.getstarzRectangle()))
                 {
-                    gp2.score++;
                     gp2.remove(gp2.s9);
+                    System.out.println(gp2.score);
                     repaint();
                     revalidate();
+                    gp2.score++;
                 }
                 else if (playerRectangle.intersects(gp2.s10.getstarzRectangle()))
                 {
-                    gp2.score++;
+                    
                     gp2.remove(gp2.s10);
+                    System.out.println(gp2.score);
                     repaint();
                     revalidate();
+                    gp2.score++;
                 }
                 
                 //at some point this game ends 
@@ -344,6 +375,7 @@ public class MainPanel extends JPanel implements ActionListener
                     np.campus4.setIcon(new ImageIcon("images/complete.png"));
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(np, "Center");
+                    resetPlayerPiece();
                     repaint();
                     revalidate();
                     
@@ -355,7 +387,6 @@ public class MainPanel extends JPanel implements ActionListener
                 }
             }            
         });      
-        gp5.complete = true;
     }    
     //menu bar actions
     public void actionPerformed(ActionEvent event)
@@ -383,9 +414,7 @@ public class MainPanel extends JPanel implements ActionListener
             mb.lblPlayer.setText("Hello, " + op.nameEntry.getText());
             remove(layout.getLayoutComponent(BorderLayout.CENTER));
             add(np, "Center");
-            xx = 300;
-            yy = 300;
-            np.player.setBounds(new Rectangle(xx, yy, 100, 100));
+            resetPlayerPiece();
             repaint();
             revalidate();
         }
@@ -454,13 +483,23 @@ public class MainPanel extends JPanel implements ActionListener
             np.player.setPlayerIcon(op.playerSelection); 
             gp1.setGameSpeed(difficulty);
             gp3.setGameSpeed(difficulty);
+            gp4.setGameSpeed(difficulty);
+            gp5.setGameSpeed(difficulty);
             mb.count.setDelay(timerTick);
             remove(layout.getLayoutComponent(BorderLayout.CENTER));
             add(np, "Center");
+            resetPlayerPiece();
             repaint();
             revalidate();
         }
-    }  
+    } 
+    
+    public void resetPlayerPiece()
+    {
+        xx = 300;
+        yy = 300;
+        np.player.setLocation(xx, yy);
+    }
     
     public Boolean checkForCompletion()
     {

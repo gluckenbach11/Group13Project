@@ -16,6 +16,7 @@ public class GamePanel4 extends JPanel implements ActionListener{
     int xx = 300;
     int yy = 300;
     int score;
+    int gameSpeed = 2000;
     Boolean complete = false;
     
     darkStar dS = new darkStar(130, 100);
@@ -39,7 +40,7 @@ public class GamePanel4 extends JPanel implements ActionListener{
         add(s2);
         add(s3);
         
-        tim = new Timer(2000,this);
+        tim = new Timer(gameSpeed,this);
         tim.start();
         
     }
@@ -68,5 +69,19 @@ public class GamePanel4 extends JPanel implements ActionListener{
             s3.setBounds(new Rectangle(60*x,30*Y,32,32));
             dS.setBounds(new Rectangle(60*j,30*k,128,128));
         }
+    }
+    public void setGameSpeed(String difficulty){
+        switch (difficulty){
+            case "slow":
+                this.gameSpeed = 4000;
+                break;
+            case "fast":
+                this.gameSpeed = 500;
+                break;
+            default:
+                this.gameSpeed = 2000;
+                break;
+        }
+        tim.setDelay(gameSpeed);
     }
 }

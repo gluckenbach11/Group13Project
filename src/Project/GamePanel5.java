@@ -8,7 +8,13 @@ package Project;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 /**
@@ -28,25 +34,33 @@ public class GamePanel5 extends JPanel implements ActionListener
     RoboDancer rb2;
     RoboDancer rb3;
     JButton dangerZone;
+    JLabel lblScore;
     Timer fallTimer;
     int score;
     int misses;
     Boolean complete = false;
+    Boolean running = false;
+    Clip clip;
+    File superTechno;
     
     GamePanel5()
     {
         super();
         setLayout(null);
+        superTechno = new File("sounds/BootsAndPants.wav");
         rb1 = new RoboDancer();
         rb2 = new RoboDancer();
         rb3 = new RoboDancer();
         dangerZone = new JButton("Click to Start");
+        lblScore = new JLabel("Score: " + score);
+        lblScore.setBounds(25, 25, 100, 25);
         rb1.setBounds(x1, y1, 100, 100);
         rb2.setBounds(x2, y2, 100, 100);
         rb3.setBounds(x3, y3, 100, 100);
         dangerZone.setBounds(0, 700, 1200, 25);
         dangerZone.setBackground(Color.red);
         dangerZone.addActionListener((this));
+        add(lblScore);
         add(rb1);
         add(rb2);
         add(rb3);
@@ -61,6 +75,7 @@ public class GamePanel5 extends JPanel implements ActionListener
                 y1 = -100;
                 rb1.setLocation(x1, y1);
                 score++;
+                lblScore.setText("Score: " + score);
                 repaint();  
             }            
         });
@@ -73,6 +88,7 @@ public class GamePanel5 extends JPanel implements ActionListener
                 y2 = -500;
                 rb2.setLocation(x2, y2);
                 score++;
+                lblScore.setText("Score: " + score);
                 repaint();  
             }            
         });
@@ -85,6 +101,7 @@ public class GamePanel5 extends JPanel implements ActionListener
                 y3 = -300;
                 rb1.setLocation(x3, y3);
                 score++;
+                lblScore.setText("Score: " + score);
                 repaint();  
             }            
         });
@@ -123,17 +140,65 @@ public class GamePanel5 extends JPanel implements ActionListener
             if(misses >= 5)
             {
                 complete = true;
+                stopSound();
             }
             //cycle the colors
             setBackground(new Color(new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat()));
             dangerZone.setBackground(new Color(new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat()));
+            lblScore.setForeground(new Color(new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat()));
             repaint();
         }
         
         if(obj == dangerZone)
-        {
-            fallTimer.start();
-            dangerZone.setText("Don't let them touch me!!");
+        {           
+            if(running)
+            {
+                fallTimer.stop();
+                stopSound();
+                dangerZone.setText("Click to Unpause");
+            }
+            else
+            {
+                fallTimer.start();
+                playSound(superTechno);
+                dangerZone.setText("Don't let them touch me!!");
+            }
+            running = !running;
         }
+    }
+    
+    public void setGameSpeed(String difficulty)
+    {
+        switch (difficulty)
+        {
+            case "slow":
+                this.gameSpeed = 1;
+                break;
+            case "fast":
+                this.gameSpeed = 5;
+                break;
+            default:
+                this.gameSpeed = 3;
+                break;
+        }
+    }
+    
+    public void playSound(File sound)
+    {
+        try
+        {
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(sound));
+            clip.start();
+        }
+        catch(IOException | LineUnavailableException | UnsupportedAudioFileException e)
+        {
+            //if sound fails, who cares?
+        }
+    }
+    
+    public void stopSound()
+    {
+        clip.stop();
     }
 }

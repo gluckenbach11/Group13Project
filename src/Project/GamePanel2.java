@@ -13,14 +13,14 @@ public class GamePanel2 extends JPanel{
     Boolean complete = false;
     // Create Stars and their locations
     starz s1  = new starz(130  , 100);
-    starz s2  = new starz(230  , 120);
+    starz s2  = new starz(230  , 140);
     starz s3  = new starz(330  ,  80);
-    starz s4  = new starz(430  , 140);
+    starz s4  = new starz(430  , 640);
     starz s5  = new starz(530  ,  60);
-    starz s6  = new starz(630  , 160);
-    starz s7  = new starz(730  ,  40);
-    starz s8  = new starz(830  , 180);
-    starz s9  = new starz(930  ,  20);
+    starz s6  = new starz(630  , 360);
+    starz s7  = new starz(730  ,  140);
+    starz s8  = new starz(830  , 780);
+    starz s9  = new starz(930  ,  820);
     starz s10 = new starz(1030 , 200);
     Player player;
     

@@ -12,6 +12,7 @@ public class NavigationPanel extends JPanel
 {
     int xx = 300;
     int yy = 300;
+    
     Campus campus1 = new Campus(100, 100);
     Campus campus2 = new Campus(1000, 100);
     Campus campus3 = new Campus(100, 600);
@@ -25,6 +26,11 @@ public class NavigationPanel extends JPanel
         setLayout(null);
         setVisible(true);
         setFocusable(true);
+        
+        
+        campus1.setHorizontalTextPosition(SwingConstants.CENTER);
+        campus1.setText("Berks\n Campus");
+        
         add(campus1);
         add(campus2);
         add(campus3);

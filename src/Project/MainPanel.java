@@ -98,7 +98,8 @@ public class MainPanel extends JPanel implements ActionListener
                 }
                 else if (playerRectangle.intersects(np.campus2.getCampusRectangle()))
                 {
-                    np.campus2.setIcon(new ImageIcon("images/complete.png"));
+                    xx = 300;
+                    yy = 300;
                     remove(layout.getLayoutComponent(BorderLayout.CENTER));
                     add(gp2, "Center");
                     repaint();
@@ -226,7 +227,6 @@ public class MainPanel extends JPanel implements ActionListener
         
         gp2.addKeyListener(new KeyAdapter()
         {            
-            int starZZZ = 10;
             @Override
             public void keyPressed(KeyEvent e) 
             {        
@@ -243,95 +243,144 @@ public class MainPanel extends JPanel implements ActionListener
                 // Check for intersection between player piece and campuses
                 if (playerRectangle.intersects(gp2.s1.getstarzRectangle()))
                 {
-                    gp2.remove(gp2.s1);
-                    System.out.println(gp2.score);
-                    repaint();
-                    revalidate();
-                    gp2.score++;
+                    if(!gp2.touch1)
+                    {
+                        gp2.remove(gp2.s1);
+                        System.out.println(gp2.score);
+                        repaint();
+                        revalidate();
+                        gp2.score++;
+                        gp2.touch1 = true;
+                    }
                 }
                 else if (playerRectangle.intersects(gp2.s2.getstarzRectangle()))
                 {
-                    gp2.remove(gp2.s2);
-                    System.out.println(gp2.score);
-                    repaint();
-                    revalidate();
-                    gp2.score++;
+                    if(!gp2.touch2)
+                    {
+                        gp2.remove(gp2.s2);
+                        System.out.println(gp2.score);
+                        repaint();
+                        revalidate();
+                        gp2.score++;
+                        gp2.touch2 = true;
+                    }
                 }
                 else if (playerRectangle.intersects(gp2.s3.getstarzRectangle()))
                 {
-                    gp2.remove(gp2.s3);
-                    System.out.println(gp2.score);
-                    repaint();
-                    revalidate();
-                    gp2.score++;
+                    if(!gp2.touch3)
+                    {
+                        gp2.remove(gp2.s3);
+                        System.out.println(gp2.score);
+                        repaint();
+                        revalidate();
+                        gp2.score++;
+                        gp2.touch3 = true;
+                    }
                 }
                 else if (playerRectangle.intersects(gp2.s4.getstarzRectangle()))
                 {
-                    gp2.remove(gp2.s4);
-                    System.out.println(gp2.score);
-                    repaint();
-                    revalidate();
-                    gp2.score++;
+                    if(!gp2.touch4)
+                    {
+                        gp2.remove(gp2.s4);
+                        System.out.println(gp2.score);
+                        repaint();
+                        revalidate();
+                        gp2.score++;
+                        gp2.touch4 = true;
+                    }
                 }
                 else if (playerRectangle.intersects(gp2.s5.getstarzRectangle()))
                 {
-                    gp2.remove(gp2.s5);
-                    System.out.println(gp2.score);
-                    repaint();
-                    revalidate();
-                    gp2.score++;
+                    if(!gp2.touch5)
+                    {
+                        gp2.remove(gp2.s5);
+                        System.out.println(gp2.score);
+                        repaint();
+                        revalidate();
+                        gp2.score++;
+                        gp2.touch5 = true;
+                    }
                 }
                 else if (playerRectangle.intersects(gp2.s6.getstarzRectangle()))
-                {
-                    gp2.remove(gp2.s6);
-                    System.out.println(gp2.score);
-                    repaint();
-                    revalidate();
-                    gp2.score++;
+                {   
+                    if(!gp2.touch6)
+                    {
+                        gp2.remove(gp2.s6);
+                        System.out.println(gp2.score);
+                        repaint();
+                        revalidate();
+                        gp2.score++;
+                        gp2.touch6 = true;
+                    }
                 }
                 else if (playerRectangle.intersects(gp2.s7.getstarzRectangle()))
                 {
-                    gp2.remove(gp2.s7);
-                    System.out.println(gp2.score);
-                    repaint();
-                    revalidate();
-                    gp2.score++;
+                    if(!gp2.touch7)
+                    {
+                        gp2.remove(gp2.s7);
+                        System.out.println(gp2.score);
+                        repaint();
+                        revalidate();
+                        gp2.score++;
+                        gp2.touch7 = true;
+                    }
                 }
                 else if (playerRectangle.intersects(gp2.s8.getstarzRectangle()))
                 {
-                    gp2.remove(gp2.s8);
-                    System.out.println(gp2.score);
-                    repaint();
-                    revalidate();
-                    gp2.score++;
-                }
+                    if(!gp2.touch8)
+                    {    
+                        gp2.remove(gp2.s8);
+                        System.out.println(gp2.score);
+                        repaint();
+                        revalidate();
+                        gp2.score++;
+                        gp2.touch8 = true;
+                    }
+                } 
                 else if (playerRectangle.intersects(gp2.s9.getstarzRectangle()))
                 {
-                    gp2.remove(gp2.s9);
-                    System.out.println(gp2.score);
-                    repaint();
-                    revalidate();
-                    gp2.score++;
+                    if(!gp2.touch9)
+                    {
+                        gp2.remove(gp2.s9);
+                        System.out.println(gp2.score);
+                        repaint();
+                        revalidate();
+                        gp2.score++;
+                        gp2.touch9 = true;
+                    }
                 }
                 else if (playerRectangle.intersects(gp2.s10.getstarzRectangle()))
                 {
-                    
-                    gp2.remove(gp2.s10);
-                    System.out.println(gp2.score);
-                    repaint();
-                    revalidate();
-                    gp2.score++;
+                    if(!gp2.touch10)
+                    {
+                        gp2.remove(gp2.s10);
+                        System.out.println(gp2.score);
+                        repaint();
+                        revalidate();
+                        gp2.score++;
+                        gp2.touch10 = true;
+                    }
                 }
                 
                 //at some point this game ends 
-                gp2.complete = true;
+                if(gp2.score >= 10)
+                {
+                    pScore.setGame2Score(gp2.score);
+                    gp2.complete = true;
+                    np.campus2.setIcon(new ImageIcon("images/complete.png"));
+                    remove(layout.getLayoutComponent(BorderLayout.CENTER));
+                    add(np, "Center");
+                    resetPlayerPiece();
+                    repaint();
+                    revalidate();
+                }
+                
                 //check for completion of all game panels
-                    if(checkForCompletion())
-                    {
-                        writePlayerScore();
-                    }
-            }            
-
+                if(checkForCompletion())
+                {
+                    writePlayerScore();
+                }
+            }    
         });
         
         gp4.addKeyListener(new KeyAdapter()
@@ -409,9 +458,6 @@ public class MainPanel extends JPanel implements ActionListener
         
         if (obj == mb.btnBack)
         {
-            pScore.setGame5Score(gp5.score);
-            pScore.setGame2Score(gp2.score);
-            mb.lblPlayer.setText("Hello, " + op.nameEntry.getText());
             remove(layout.getLayoutComponent(BorderLayout.CENTER));
             add(np, "Center");
             resetPlayerPiece();
@@ -510,7 +556,14 @@ public class MainPanel extends JPanel implements ActionListener
     {
         String date = LocalDate.now().toString();
         pScore.setDate(date);
+        pScore.setPlayTime(mb.time);
         xml.writeXML(pScore);
+        JOptionPane.showMessageDialog(null, "<html>Final Scores<br/>Total Play Time: " + pScore.getPlayTime() +
+                "<br/>Erie Campus Score: " + pScore.getGame1Score() +
+                "<br/>World Campus Score: " + pScore.getGame2Score() +
+                "<br/>DuBois Campus Score: " + pScore.getGame3Score() +
+                "<br/>Beaver Campus Score: " + pScore.getGame4Score() + 
+                "<br/>Lehigh Campus Score: " + pScore.getGame5Score() + "</html>");
     }
     
     @Override

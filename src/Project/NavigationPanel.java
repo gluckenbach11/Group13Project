@@ -26,11 +26,12 @@ public class NavigationPanel extends JPanel
         setLayout(null);
         setVisible(true);
         setFocusable(true);
-        
-        
-        campus1.setHorizontalTextPosition(SwingConstants.CENTER);
-        campus1.setText("Berks\n Campus");
-        
+        campus1.setToolTipText("Erie Campus");
+        campus2.setToolTipText("World Campus");
+        campus3.setToolTipText("DuBois Campus");
+        campus4.setToolTipText("Lehigh Campus");
+        campus5.setToolTipText("Beaver Campus");
+        player.setToolTipText("ouch...");
         add(campus1);
         add(campus2);
         add(campus3);

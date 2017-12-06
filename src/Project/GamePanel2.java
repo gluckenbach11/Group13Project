@@ -4,9 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class GamePanel2 extends JPanel{
-    
-    
+public class GamePanel2 extends JPanel
+{
     int xx = 300;
     int yy = 300;
     int score;
@@ -14,14 +13,25 @@ public class GamePanel2 extends JPanel{
     // Create Stars and their locations
     starz s1  = new starz(130  , 100);
     starz s2  = new starz(230  , 140);
-    starz s3  = new starz(330  ,  80);
+    starz s3  = new starz(330  , 80);
     starz s4  = new starz(430  , 640);
-    starz s5  = new starz(530  ,  60);
+    starz s5  = new starz(530  , 60);
     starz s6  = new starz(630  , 360);
-    starz s7  = new starz(730  ,  140);
-    starz s8  = new starz(830  , 780);
-    starz s9  = new starz(930  ,  820);
-    starz s10 = new starz(1030 , 200);
+    starz s7  = new starz(730  , 140);
+    starz s8  = new starz(830  , 500);
+    starz s9  = new starz(930  , 333);
+    starz s10 = new starz(900  , 200);
+    Boolean touch1 = false;
+    Boolean touch2 = false;
+    Boolean touch3 = false;
+    Boolean touch4 = false;
+    Boolean touch5 = false;
+    Boolean touch6 = false;
+    Boolean touch7 = false;
+    Boolean touch8 = false;
+    Boolean touch9 = false;
+    Boolean touch10 = false;    
+    
     Player player;
     
     

@@ -2,10 +2,10 @@
 <java version="1.8.0_121" class="java.beans.XMLDecoder">
  <object class="Project.PlayerScore">
   <void property="date">
-   <string>2017-11-29</string>
+   <string>2017-12-05</string>
   </void>
-  <void property="game1Score">
-   <int>1</int>
+  <void property="game2Score">
+   <int>10</int>
   </void>
   <void property="playerName">
    <string>Player 1</string>
